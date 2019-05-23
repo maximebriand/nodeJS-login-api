@@ -18,7 +18,21 @@ const userSchema = new Schema({
     type: 'String',
     required: true,
     trim: true
+  },
+  email: {
+    type: 'String',
+    required: true
   }
+})
+
+userSchema.plugin(require('mongoose-role'), {
+    roles: ['public', 'user', 'admin'],
+    accessLevels: {
+        public: ['public', 'user', 'admin'],
+        anon: ['public'],
+        user: ['user', 'admin'],
+        admin: ['admin']
+    }
 })
 
 // encrypt password before save
